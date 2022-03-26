@@ -1,0 +1,50 @@
+{
+    "name": "store_api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon index.js",
+        "start": "node index.js",
+        "lint": "eslint",
+        "migrations:generate": "sequelize-cli migration:generate --name",
+        "migrations:run": "sequelize-cli db:migrate",
+        "migrations:revert": "sequelize-cli db:migrate:undo",
+        "migrations:delete": "sequelize-cli db:migrate:undo:all"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ManuelDevWeb/API_Rest_Express.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/ManuelDevWeb/API_Rest_Express/issues"
+    },
+    "homepage": "https://github.com/ManuelDevWeb/API_Rest_Express#readme",
+    "devDependencies": {
+        "eslint": "^8.10.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "nodemon": "^2.0.15",
+        "prettier": "^2.5.1"
+    },
+    "dependencies": {
+        "@hapi/boom": "^9.1.4",
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.0",
+        "express": "^4.17.3",
+        "faker": "^5.5.3",
+        "joi": "^17.6.0",
+        "mysql2": "^2.3.3",
+        "pg": "^8.7.3",
+        "pg-hstore": "^2.3.4",
+        "sequelize": "^6.17.0",
+        "sequelize-cli": "^6.4.1"
+    },
+    "engines": {
+        "node": "16.x"
+    }
+}
