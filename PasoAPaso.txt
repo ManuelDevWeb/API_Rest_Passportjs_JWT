@@ -1,3 +1,6 @@
 • Protección de Contraseñas •
 
 1. Crear el middleware: middleware: auth.handler.js
+
+2. Instalar la dependencia: npm i bcrypt
+

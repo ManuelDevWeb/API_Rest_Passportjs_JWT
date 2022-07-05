@@ -6,7 +6,7 @@ const boom = require('@hapi/boom');
 // Importando la configuración con las variables de entorno
 const { config } = require('../config/config');
 
-// Funcion
+// Funcion para validar la key de autenticacion
 function checkApiKey(req, res, next) {
   // Obteniendo key de los headers
   const apiKey = req.headers['api'];
