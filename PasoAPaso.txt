@@ -4,3 +4,6 @@
 
 2. Instalar la dependencia: npm i bcrypt
 
+3. Implementar bcrypt en el archivo: services/user/user.service.js
+
+4. Implementar bcrypt en el archivo: services/customer/customer.service.js
