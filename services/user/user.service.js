@@ -46,6 +46,17 @@ class UserService {
     return respuesta;
   }
 
+  // Buscar usuario por email
+  async findByEmail(email) {
+    // Buscando un usuario
+    const respuesta = await models.User.findOne({
+      // Donde el email coincida con alguno de la DB
+      where: { email },
+    });
+
+    return respuesta;
+  }
+
   // Buscar un usuario
   async findOne(id) {
     // Buscando usuario por id con las funcionalidades que nos brinda el ORM Sequelize

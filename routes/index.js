@@ -11,23 +11,27 @@ const categoriesRouter = require('./categories/categories.router');
 const ordersRouter = require('./orders/orders.router');
 // Importando router de clienntes
 const customersRouter = require('./customers/customers.router');
+// Importando router de autenticacion
+const authenticationRouter = require('./authentication/authentication.router');
 
 function routerApi(app) {
-    const router = express.Router();
+  const router = express.Router();
 
-    // Endpoint principal
-    app.use('/api/v1', router);
+  // Endpoint principal
+  app.use('/api/v1', router);
 
-    // Definimos endpoint para productos
-    router.use('/products', productsRouter);
-    // Definimos endpoint para usuarios
-    router.use('/users', usersRouter);
-    // Definimos endpoint para categorias
-    router.use('/categories', categoriesRouter);
-    // Definimos endpoint para ordenes
-    router.use('/orders', ordersRouter);
-    // Definimos endpoint para clientes
-    router.use('/customers', customersRouter);
+  // Definimos endpoint para productos
+  router.use('/products', productsRouter);
+  // Definimos endpoint para usuarios
+  router.use('/users', usersRouter);
+  // Definimos endpoint para categorias
+  router.use('/categories', categoriesRouter);
+  // Definimos endpoint para ordenes
+  router.use('/orders', ordersRouter);
+  // Definimos endpoint para clientes
+  router.use('/customers', customersRouter);
+  // Definimos endpoint para autenticacion
+  router.use('/auth', authenticationRouter);
 }
 
 // Exportamos módulo
