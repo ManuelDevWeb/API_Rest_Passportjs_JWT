@@ -8,6 +8,8 @@
 
 4. Implementar bcrypt en el archivo: services/customer/customer.service.js
 
+• Passport y JSON Web Tokens •
+
 5. Instalar la dependencia: npm i passport passport-local
 
 6. Crear la carpeta: utils
@@ -18,8 +20,16 @@
 
 9. Crear la carpeta: utils/auth/strategies
 
-10. Crear la carpeta: utils/auth/strategies/local.strategy.js
+10. Crear el archivo: utils/auth/strategies/local.strategy.js
 
 11. Crear la carpeta: routes/authentication
 
 12. Crear el archivo: routes/authentication/authentication.router.js
+
+13. Instalar la dependencia: npm i jsonwebtoken
+
+14. Generar JWT en el archivo: routes/authentication/authentication.router.js
+
+15. Instalar la dependencia: npm i passport-jwt
+
+16. Crear el archivo: utils/auth/strategies/jwt.strategy.js
