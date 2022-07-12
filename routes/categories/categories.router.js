@@ -13,6 +13,9 @@ const {
 } = require('../../schemas/categories/category.schema');
 // Importando middleware de validaciones
 const validatorHandler = require('../../middlewares/validator.handler');
+// Importando middleware para validar el rol
+// const { checkAdminRole } = require('../../middlewares/auth.handler');
+const { checkRoles } = require('../../middlewares/auth.handler');
 
 const router = express.Router();
 
@@ -58,6 +61,10 @@ router.post(
   '/',
   // Capa de autenticacion, (Indicamos el tipo de estrategia) y para que funcione se debe enviar el token constantemente (bearertoken)
   passport.authenticate('jwt', { session: false }),
+  // Capa de gestion de permisos (Recoge el payload retornado por el anterior middleware)
+  // checkAdminRole,
+  // Se mejoro la funcion anterior para que valide varios roles
+  checkRoles('admin', 'customer'),
   validatorHandler(createCategorySchema, 'body'),
   async (req, res, next) => {
     try {

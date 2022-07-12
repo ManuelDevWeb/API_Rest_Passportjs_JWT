@@ -33,3 +33,5 @@
 15. Instalar la dependencia: npm i passport-jwt
 
 16. Crear el archivo: utils/auth/strategies/jwt.strategy.js
+
+17. Crear la funcion para validar el rol en el archivo: middleware/auth.handler.js
