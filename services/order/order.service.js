@@ -10,8 +10,20 @@ class OrderService {
 
   // Crear Orden
   async create(data) {
+    const customer = await models.Customer.findOne({
+      where: {
+        // Consulta por asociaciones (obteniendo usuario por id)
+        '$user.id$': data.userId,
+      },
+      include: ['user'],
+    });
+
+    if (!customer) {
+      throw boom.badRequest('Customer not found');
+    }
+
     // Creando orden con las funcionalidades que nos brinda el ORM Sequelize
-    const newOrder = await models.Order.create(data);
+    const newOrder = await models.Order.create({ customerId: customer.id });
     return newOrder;
   }
 
