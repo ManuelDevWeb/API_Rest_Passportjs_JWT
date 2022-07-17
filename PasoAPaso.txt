@@ -41,3 +41,19 @@
 19. Crear la carpeta: router/profile
 
 20. Crear el archivo: router/profile/profile.router.js
+
+• Envio de emails con Node.js •
+
+21. Instalar la dependencia: npm i nodemailer
+
+22. Crear el archivo: nodemailer.js
+
+23. Configurar nodemailer para enviar correos a Gmail:
+    - Ir a la cuenta de gmail, account
+    - Security
+    - Signing in to google (2-Step Veritification Active)
+    - App passwords
+    - Select app: other
+    - Name: NodeApp
+    - Copiar la password que nos dan: njjftajeiueogtpb
+    - Ir a archivo nodemailer.js y adaptarlo a Gmail.
