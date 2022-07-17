@@ -35,3 +35,9 @@
 16. Crear el archivo: utils/auth/strategies/jwt.strategy.js
 
 17. Crear la funcion para validar el rol en el archivo: middleware/auth.handler.js
+
+18. Recomendacion: Leer sobre accesscontrol para el tema de roles complejos.
+
+19. Crear la carpeta: router/profile
+
+20. Crear el archivo: router/profile/profile.router.js

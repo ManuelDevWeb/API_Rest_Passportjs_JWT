@@ -6,62 +6,84 @@ const { models } = require('../../libs/sequelize');
 
 // Clase Servicio Order
 class OrderService {
-    constructor() {}
+  constructor() {}
 
-    // Crear Orden
-    async create(data) {
-        // Creando orden con las funcionalidades que nos brinda el ORM Sequelize
-        const newOrder = await models.Order.create(data);
-        return newOrder;
+  // Crear Orden
+  async create(data) {
+    // Creando orden con las funcionalidades que nos brinda el ORM Sequelize
+    const newOrder = await models.Order.create(data);
+    return newOrder;
+  }
+
+  // Crear item
+  async addItem(data) {
+    // Creando item con las funcionalidades que nos brinda el ORM Sequelize
+    const newItem = await models.OrderProduct.create(data);
+    return newItem;
+  }
+
+  // Buscar Ordenes
+  async find() {
+    return [];
+  }
+
+  // Buscar una orden
+  async findOne(id) {
+    // Buscando orden por id con las funcionalidades que nos brinda el ORM Sequelize
+    const order = await models.Order.findByPk(id, {
+      // Incluimos las asociaciones definidas en la clase Order del modelo
+      // (En este caso la anidación va mas a profundiad, es decir, aparte de customer también nos traerá la info del user)
+      include: [
+        {
+          association: 'customer',
+          include: ['user'],
+        },
+        // Incluimos asosiación items
+        'items',
+      ],
+    });
+
+    // Validando que la orden exista
+    if (!order) {
+      throw boom.notFound('Order not found');
     }
 
-    // Crear item
-    async addItem(data) {
-        // Creando item con las funcionalidades que nos brinda el ORM Sequelize
-        const newItem = await models.OrderProduct.create(data);
-        return newItem;
-    }
+    return order;
+  }
 
-    // Buscar Ordenes
-    async find() {
-        return [];
-    }
+  // Buscar una orden por usuario
+  async findByUser(userId) {
+    // Buscando las ordenes de un usuario
+    const orders = await models.Order.findAll({
+      where: {
+        // Consulta por asociaciones (obteniendo usuario por id que esta relacionado con customer)
+        '$customer.user.id$': userId,
+      },
+      // Incluimos las asociaciones definidas en la clase Order del modelo
+      // (En este caso la anidación va mas a profundiad, es decir, aparte de customer también nos traerá la info del user)
+      include: [
+        {
+          association: 'customer',
+          include: ['user'],
+        },
+      ],
+    });
 
-    // Buscar una orden
-    async findOne(id) {
-        // Buscando orden por id con las funcionalidades que nos brinda el ORM Sequelize
-        const order = await models.Order.findByPk(id, {
-            // Incluimos las asociaciones definidas en la clase Order del modelo
-            // (En este caso la anidación va mas a profundiad, es decir, aparte de customer también nos traerá la info del user)
-            include: [{
-                    association: 'customer',
-                    include: ['user'],
-                },
-                // Incluimos asosiación items
-                'items',
-            ],
-        });
+    return orders;
+  }
 
-        // Validando que la orden exista
-        if (!order) {
-            throw boom.notFound('Order not found');
-        }
+  // Actualizar una orden
+  async update(id, changes) {
+    return {
+      id,
+      changes,
+    };
+  }
 
-        return order;
-    }
-
-    // Actualizar una orden
-    async update(id, changes) {
-        return {
-            id,
-            changes,
-        };
-    }
-
-    // Eliminar una orden
-    async delete(id) {
-        return { id };
-    }
+  // Eliminar una orden
+  async delete(id) {
+    return { id };
+  }
 }
 
 // Exportamos módulo

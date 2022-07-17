@@ -13,6 +13,8 @@ const ordersRouter = require('./orders/orders.router');
 const customersRouter = require('./customers/customers.router');
 // Importando router de autenticacion
 const authenticationRouter = require('./authentication/authentication.router');
+// Importando roter de profile
+const profileRouter = require('./profile/profile.router');
 
 function routerApi(app) {
   const router = express.Router();
@@ -32,6 +34,8 @@ function routerApi(app) {
   router.use('/customers', customersRouter);
   // Definimos endpoint para autenticacion
   router.use('/auth', authenticationRouter);
+  // Definimos endpoint para profile
+  router.use('/profile', profileRouter);
 }
 
 // Exportamos módulo
