@@ -64,4 +64,4 @@ const sendMail = async () => {
   // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 };
 
-sendMail();
+module.exports;

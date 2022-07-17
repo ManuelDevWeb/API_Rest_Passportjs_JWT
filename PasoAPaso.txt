@@ -57,3 +57,7 @@
     - Name: NodeApp
     - Copiar la password que nos dan: njjftajeiueogtpb
     - Ir a archivo nodemailer.js y adaptarlo a Gmail.
+
+24. Crear la carpeta: services/auth
+
+25. Crear el archivo: services/auth/auth.service.js

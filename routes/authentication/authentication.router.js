@@ -2,10 +2,12 @@
 const express = require('express');
 // Importando passport (Estrategias para autenticacion)
 const passport = require('passport');
-// Importando JWT
-const jwt = require('jsonwebtoken');
 
-const { config } = require('../../config/config');
+// Importando Service Auth
+const AuthService = require('../../services/auth/auth.service');
+
+// Instanciando servicio de auth
+const service = new AuthService();
 
 const router = express.Router();
 
@@ -17,26 +19,31 @@ router.post(
   passport.authenticate('local', { session: false }),
   async (req, res, next) => {
     try {
-      // El middleware anterior dejo la informacion del usuario
+      // El middleware local retorna el user
       const { user } = req;
 
-      // Informacion a encriptar dentro del token
-      const payload = {
-        // Identificar del token
-        sub: user.id,
-        // Informacion que queramos
-        role: user.role,
-      };
+      const rta = await service.signToken(user);
 
-      // Firmando token
-      const token = jwt.sign(payload, config.jwtSecret);
-
-      res.json({ user, token });
+      res.json(rta);
     } catch (error) {
       next(error);
     }
   }
 );
+
+// Recuperar password
+router.post('/recovery', async (req, res, next) => {
+  try {
+    // Obteniendo el email que viene por body
+    const { email } = req.body;
+
+    const rta = await service.sendMail(email);
+
+    res.json(rta);
+  } catch (error) {
+    next(error);
+  }
+});
 
 // Exportamos modulo
 module.exports = router;
