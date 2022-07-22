@@ -61,3 +61,9 @@
 24. Crear la carpeta: services/auth
 
 25. Crear el archivo: services/auth/auth.service.js
+
+26. Generar nueva migracion para agregar campos a la db:  npm run migrations:generate recovery-token-field
+
+27. Agregar nuevo campos en el modelo: bd/models/user.model.js
+
+28. Correr la nueva migracion: npm run migrations:run

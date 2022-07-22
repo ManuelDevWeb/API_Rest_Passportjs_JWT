@@ -55,8 +55,8 @@ class AuthService {
     return { user, token };
   }
 
-  // Enviar Email
-  async sendMail(email) {
+  // Reset password
+  async sendRecoveryPassword(email) {
     // Intentamos buscar el usuario por email
     const user = await service.findByEmail(email);
 
@@ -65,25 +65,77 @@ class AuthService {
       throw boom.unauthorized();
     }
 
+    // Informacion a encriptar dentro del token
+    const payload = {
+      // Identificar del token
+      sub: user.id,
+    };
+    // Firmando token
+    const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
+
+    const link = `http://localhost:3000/api/v1/recovery?token=${token}`;
+
+    // Actualizando datos del usuario en la db con el token enviado
+    await service.update(user.id, { recoveryToken: token });
+
+    const mail = {
+      from: config.smtpEmail, // sender address
+      to: `${user.email}`, // list of receivers
+      subject: 'Email para recuperar password', // Subject line
+      // Cuerpo del email, etiquetas y estilos
+      html: `<b>Ingresa a este link para recuperar password => ${link}</b>`, // html body
+    };
+
+    const rta = await this.sendMail(mail);
+
+    return rta;
+  }
+
+  // Cambias password
+  async changePassword(token, newPassword) {
+    try {
+      // Verificamos el token
+      const payload = jwt.verify(token, config.jwtSecret);
+
+      // Intentamos buscar el usuario por id en la db
+      const user = await service.findOne(payload.sub);
+
+      // Validamos si el recovery token del usuario coincide con el token enviado
+      if (user.recoveryToken !== token) {
+        throw boom.unauthorized();
+      }
+
+      // Hasheamos password
+      const hashPassword = await bcrypt.hash(newPassword, 10);
+
+      // Actualizamos la informacion del usuario en la db
+      await service.update(user.id, {
+        recoveryToken: null,
+        password: hashPassword,
+      });
+
+      return {
+        message: 'Password modified',
+      };
+    } catch (error) {
+      throw boom.unauthorized();
+    }
+  }
+
+  // Enviar Email
+  async sendMail(infoEmail) {
     // Configuramos correctamente para gmail
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       secure: true, // True for 465
       port: 465,
       auth: {
-        user: 'manueldeveloper17@gmail.com',
-        pass: 'njjftajeiueogtpb',
+        user: config.smtpEmail,
+        pass: config.smtpPassword,
       },
     });
 
-    await transporter.sendMail({
-      from: 'manueldeveloper17@gmail.com', // sender address
-      to: `${user.email}`, // list of receivers
-      subject: 'Nuevo Correo', // Subject line
-      text: 'Hola Manuel, correo de prueba.', // plain text body
-      // Cuerpo del email, etiquetas y estilos.(En enlace apunta a la ruta para confirmar usuario)
-      html: '<b>Hola Manuel, correo de prueba.</b>', // html body
-    });
+    await transporter.sendMail(infoEmail);
 
     return {
       message: 'Mail sent',

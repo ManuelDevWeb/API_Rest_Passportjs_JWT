@@ -22,6 +22,7 @@ router.post(
       // El middleware local retorna el user
       const { user } = req;
 
+      // Llamamos el metodo encargado de firmar el token y devolverlo junto a la info del usuario
       const rta = await service.signToken(user);
 
       res.json(rta);
@@ -37,8 +38,22 @@ router.post('/recovery', async (req, res, next) => {
     // Obteniendo el email que viene por body
     const { email } = req.body;
 
-    const rta = await service.sendMail(email);
+    // Enviamos el email que viene por body a la funcion encargada de enviar los correos electronicos
+    const rta = await service.sendRecoveryPassword(email);
 
+    res.json(rta);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Cambiar password
+router.post('/change-password', async (req, res, next) => {
+  try {
+    // Obteniendo el token y password que viene por body
+    const { token, newPassword } = req.body;
+    // Enviamos token y password al metodo encargado de cambiar la password
+    const rta = await service.changePassword(token, newPassword);
     res.json(rta);
   } catch (error) {
     next(error);

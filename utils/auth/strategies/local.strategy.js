@@ -15,7 +15,9 @@ const LocalStrategy = new Strategy(
   },
   async (email, password, done) => {
     try {
+      // Obtenemos el usuario de la DB
       const user = await service.getUser(email, password);
+      // Si todo sale bien, devolvemos null y el usuario
       done(null, user);
     } catch (error) {
       done(error, false);
