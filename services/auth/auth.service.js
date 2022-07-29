@@ -17,7 +17,7 @@ const service = new UserService();
 
 // Clase Servicio Auth
 class AuthService {
-  // Obtener usuario
+  // Obtener usuario y validamos password
   async getUser(email, password) {
     // Intentamos buscar el usuario por email
     const user = await service.findByEmail(email);

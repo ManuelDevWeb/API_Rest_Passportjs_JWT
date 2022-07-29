@@ -67,3 +67,5 @@
 27. Agregar nuevo campos en el modelo: bd/models/user.model.js
 
 28. Correr la nueva migracion: npm run migrations:run
+
+• Deploy en Heroku •

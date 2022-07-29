@@ -44,7 +44,7 @@ app.use(cors(options));
 // Permite conexiones desde todos los origenes
 // app.use(cors());
 
-// Importando estrategias de autenticacion
+// Importando estrategias de autenticacion (PRUEBA)
 require('./utils/auth');
 
 app.get('/nueva-ruta', checkApiKey, (req, res) => {
